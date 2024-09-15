@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.profile--details{
+    background-image: url("https://i.pinimg.com/474x/d9/68/20/d9682001c59740c74dc5ed063f1646b2.jpg");
+}
