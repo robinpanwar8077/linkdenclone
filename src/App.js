@@ -7,6 +7,7 @@ import {onAuthStateChanged} from "firebase/auth"
 import { auth } from "./firebaseConfig";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./components/loadingScreen/LoadingScreen";
+import { useCallback } from 'react';
 
 
 function App() {
@@ -16,28 +17,25 @@ function App() {
 
   const dispatch=useDispatch();
 
-  const checkUser= ()=>{
+  const checkUser = useCallback(() => {
     onAuthStateChanged(auth, (user) => {
-      if ( user){
+      if (user) {
         dispatch(login({
           email: user.email,
           userId: user.uid,
           profileUrl: user.photoURL,
           name: user.displayName,
         }));
-      }
-      else {
+      } else {
         dispatch(logout());
       }
-    })
-    
-
-  }
-
-  useEffect(()=>{
-    checkUser()
-    setIsLoading(false)
-  },[])
+    });
+  }, [dispatch]); 
+  
+  useEffect(() => {
+    checkUser();
+    setIsLoading(false);
+  }, [checkUser]);
 
   const user= useSelector((state)=>state.userDetails.user)
 
